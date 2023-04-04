@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+        }
+
+        .popup {
+            width: 600px;
+            height: 600px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box {
+            width: 300px;
+            height: 40px;
+            line-height: 40px;
+            margin: 0 auto;
+            text-indent: 4px;
+        }
+
+        .box span {
+            display: block;
+            width: 300px;
+            border: solid 1px #ccc;
+            cursor: pointer;
+            box-sizing: border-box;
+            padding: 5px 10px;
+        }
+
+        .box ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            border: solid 1px #ccc;
+            border-top: none;
+            width: 300px;
+            text-indent: 8px;
+            display: none;
+            ;
+            padding: 4px;
+            box-sizing: border-box;
+        }
+
+        .box ul li {
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .box ul li.hover {
+            background: #66f;
+            color: #fff;
+        }
+
+        .headSculpture {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border: 6px solid #ccc;
+            border-color: transparent transparent transparent #ccc;
+            position: relative;
+            box-sizing: border-box;
+
+            -ms-transform: rotate(90deg);
+            /* IE 9 */
+            -webkit-transform: rotate(90deg);
+            /* Safari and Chrome */
+            transform: rotate(90deg);
+        }
+
+        .arrow::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            left: -6px;
+            top: -6px;
+            border: 6px solid red;
+            position: absolute;
+            box-sizing: border-box;
+            transform: translateX(-2px);
+            border-color: transparent transparent transparent #fff;
+        }
+
+        .headSculptureColor {
+            color: #999;
+            margin-left: 20px;
+        }
+
+        .header_list {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header_row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .confirmbottom {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            margin-top: 260px;
+        }
+
+        .confirm {
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: #e4393c;
+            color: #fff;
+            border-radius: 8px;
+            margin-right: 30px;
+        }
+
+        .cancel {
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: #999;
+            color: #fff;
+            border-radius: 8px;
+            margin-left: 30px;
+
+
+        }
+
+        .positionCancel {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            color: #ccc;
+            position: absolute;
+            right: -25px;
+            top: -26px;
+            font-size: 30px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="popup">
+        <div class="positionCancel">x</div>
+        <div class="box">
+            <span></span>
+            <ul class="list">
+                <li>
+
+                    <div class="header_list">
+                        <div class="header_row">
+                            <img class="headSculpture"
+                                src="https://www.6pian.cn/uploadfile/User/47558/article/533851343.jpeg" alt=""
+                                srcset="">
+                            <div class="headSculptureColor">小红</div>
+                        </div>
+                        <div class="arrow"></div>
+                    </div>
+
+                </li>
+                <li>
+
+                    <div class="header_list">
+                        <div class="header_row">
+                            <img class="headSculpture"
+                                src="https://www.6pian.cn/uploadfile/User/47558/article/533851343.jpeg" alt=""
+                                srcset="">
+                            <div class="headSculptureColor">小红</div>
+                        </div>
+                        <div class="arrow"></div>
+
+                    </div>
+
+                </li>
+                <li>
+
+                    <div class="header_list">
+                        <div class="header_row">
+                            <img class="headSculpture"
+                                src="https://www.6pian.cn/uploadfile/User/47558/article/533851343.jpeg" alt=""
+                                srcset="">
+                            <div class="headSculptureColor">小红</div>
+                        </div>
+                        <div class="arrow"></div>
+
+                    </div>
+
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="confirmbottom">
+            <div class="confirm">确认</div>
+            <div class="cancel">取消</div>
+        </div>
+    </div>
+</body>
+<script>
+    var ospan = document.querySelector(".box span");
+    var oul = document.querySelector(".list");
+    var arrow = document.querySelector(".arrow");
+
+    var ali = oul.children;
+    var flag = 0;
+
+    // 当前确认选中的索引
+    var index = 0;
+
+    // 键盘控制选项的索引
+    var keyIndex;
+
+    setDefault()
+    for (var i = 0; i < ali.length; i++) {
+        ali[i].xuhao = i;
+        ali[i].onmouseover = function () {
+            this.className = "hover";
+
+            // arrow.style.display = "none";  
+            // 防止第一次鼠标进入选项，找不到keyIndex索引，而报错
+            if (keyIndex !== undefined) {
+                ali[keyIndex].className = "";
+            }
+
+            // 鼠标进入选项时，将键盘的索引，设置为当前选项的索引
+            keyIndex = this.xuhao;
+
+            console.log("======>2222", keyIndex);
+        }
+        ali[i].onmouseout = function (eve) {
+            var e = eve || window.event;
+            stopBubble(e);
+
+            this.className = "";
+            // 鼠标离开选项时，将键盘的索引，设置为默认值
+            // keyIndex = null;
+            //   arrow.style.display = "block";    
+        }
+        ali[i].onclick = function () {
+
+
+            ali[index].lastElementChild.remove();
+
+
+            index = this.xuhao;
+
+
+            setDefault()
+            oul.style.display = "none";
+            flag = 0;
+
+
+        }
+    }
+
+
+    function setDefault() {
+        ospan.innerHTML = ali[index].innerHTML;
+        var em = document.createElement("em")
+        em.innerHTML = "";
+        ali[index].appendChild(em);
+        console.log("======>6");
+        arrow.style.display = "block";
+
+    }
+
+    ospan.onclick = function (eve) {
+        var e = eve || window.event;
+        stopBubble(e);
+
+        if (flag === 0) {
+            oul.style.display = "block";
+
+            // arrow.style.display = "none"; 
+            // 下拉菜单每次重新显示，都是需要将键盘所有内容设置为默认值
+            if (keyIndex !== undefined) {
+                ali[keyIndex].className = "";
+            }
+            keyIndex = undefined;
+
+            flag = 1;
+        } else {
+            oul.style.display = "none";
+            flag = 0;
+
+
+        }
+    }
+
+
+    document.onclick = function () {
+        oul.style.display = "none";
+        flag = 0;
+
+    }
+
+
+    function stopBubble(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation()
+        } else {
+            e.cancelBubble = true;
+
+        }
+    }
+
+    // ====================
+
+    // 鼠标直接离开ul，将键盘的所有内容设置为默认值
+    oul.onmouseout = function () {
+        // console.log(keyIndex);
+        if (keyIndex !== undefined) {
+            ali[keyIndex].className = "";
+        }
+        keyIndex = undefined;
+    }
+
+
+    document.onkeydown = function (eve) {
+        var e = eve || window.event;
+        var code = e.keyCode || e.which;
+        // 上
+        if (code === 38) {
+            // 第一次按下键盘，需要将keyIndex设置为起点的上一个值
+            if (keyIndex === undefined) {
+                keyIndex = ali.length;
+            }
+            // 计算索引
+            if (keyIndex === 0) {
+                keyIndex = 0
+            } else {
+                keyIndex--;
+            }
+            // 如果索引为起点，不需要清除上一个元素的样式
+            if (keyIndex !== ali.length - 1) {
+                ali[keyIndex + 1].className = "";
+            }
+            // 根据索引，添加样式
+            ali[keyIndex].className = "hover";
+        }
+        // 下
+        if (code === 40) {
+            if (keyIndex === undefined) {
+                keyIndex = -1;
+            }
+            if (keyIndex === ali.length - 1) {
+                keyIndex = ali.length - 1
+            } else {
+                keyIndex++;
+            }
+            if (keyIndex !== 0) {
+                ali[keyIndex - 1].className = "";
+            }
+            ali[keyIndex].className = "hover"
+        }
+        // 回车
+        if (code === 13) {
+            // 清除上一个选中的选项的选中状态
+            ali[index].lastElementChild.remove();
+            // 修改上一个选中的索引为键盘的索引
+            index = keyIndex;
+            // 设置选项的默认状态
+            setDefault();
+            // 隐藏下拉菜单
+            oul.style.display = "none";
+            // 修改下拉菜单显示状态
+            flag = 0;
+        }
+    }
+
+
+
+
+
+
+</script>
+
+</html>
